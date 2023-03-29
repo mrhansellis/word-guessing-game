@@ -2,3 +2,5 @@
 2. Build wordtoguess form
 3. Determine wordtoguess
   -Perhaps reveal each prop of wordtogeuss after correct letterguessform entry.
+
+  Co-authored-by: Greg Ramsower <greg.ramsower@gmail.com>
