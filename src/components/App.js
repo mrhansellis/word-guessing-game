@@ -1,11 +1,13 @@
 import React from "react";
-import App from './App.css';
+import Header from "./Header";
+import GameControl from "./GameControl";
 
 function App() {
   return (
-    <div className="App">
+    <div className="AppMain">
       <>
       <Header />
+      <GameControl />
       </>
     </div>
   );
