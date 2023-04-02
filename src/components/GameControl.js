@@ -22,12 +22,25 @@ class GameControl extends React.Component {
     }));
   }
 
+  handleAddingWordToGame = (newWord) => {
+    const { dispatch } = this.props;
+    const { wordToGuess } = newWord;
+    const action = {
+        type: 'ADD_WORD',
+        wordToGuess: wordToGuess
+    }
+    dispatch(action);
+    console.log(action);
+    this.setState({formVisibleOnPage: false});
+  }
+
   render(){
     let currentlyVisibleState = null;
     let buttonText = null; 
 
     if (this.state.formVisibleOnPage) {
-      currentlyVisibleState = <WordToGuessForm />
+      currentlyVisibleState = <WordToGuessForm 
+                              onNewWordCreation = {this.handleAddingWordToGame}/>
       buttonText = "Return to Splash Page"
     } else {
       currentlyVisibleState = <SplashPage />
@@ -44,12 +57,16 @@ class GameControl extends React.Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     /* xxxxxxxx: state */
-//   }
-// }
+GameControl.propTypes = {
+  wordToGuess: PropTypes.string
+};
 
-// GameControl = connect(mapStateToProps)(GameControl);
+const mapStateToProps = state => {
+  return {
+    wordToGuess: state.wordToGuess
+  }
+}
+
+GameControl = connect(mapStateToProps)(GameControl);
 
 export default GameControl;
