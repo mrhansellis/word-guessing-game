@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import React from 'react';
 import WordToGuessForm from './WordToGuessForm';
 import SplashPage from './SplashPage';
-import LetterGuessForm from './LetterGuessForm';
+//import LetterGuessForm from './LetterGuessForm';
+import GameBoard from './GameBoard';
 import PropTypes from "prop-types";
 
 class GameControl extends React.Component {
@@ -12,13 +13,19 @@ class GameControl extends React.Component {
     console.log(props);
     this.state = {
       formVisibleOnPage: false,
-      
+      gameVisibleOnPage: false,
     };
   }
 
   handleClick = () => {
     this.setState(prevState => ({
       formVisibleOnPage: !prevState.formVisibleOnPage
+    }));
+  }
+
+  viewGame = () => {
+    this.setState(prevState => ({
+      gameVisibleOnPage: !prevState.gameVisibleOnPage
     }));
   }
 
@@ -31,14 +38,37 @@ class GameControl extends React.Component {
     }
     dispatch(action);
     console.log(action);
-    this.setState({formVisibleOnPage: false});
+    this.setState(
+      {formVisibleOnPage: false,
+      gameVisibleOnPage: true}
+    );
+  }
+
+  handleAddingLetter = (newLetter) => {
+    const { dispatch } = this.props;
+    const { letterToGuess } = newLetter;
+    const action = {
+      type: 'ADD_LETTER',
+      letterToGuess: letterToGuess
+    }
+    dispatch(action);
+    console.log(action);
+    this.setState({
+      gameVisibleOnPage: true
+    })
   }
 
   render(){
     let currentlyVisibleState = null;
-    let buttonText = null; 
+    let buttonText = null;
 
-    if (this.state.formVisibleOnPage) {
+    if (this.state.gameVisibleOnPage) {
+      currentlyVisibleState=<GameBoard
+                            wordToGuess = {this.props.wordToGuess}
+                            letterToGuess = {this.props.letterToGuess}
+                            onLetterGuessCreation = {this.handleAddingLetter}/>
+      buttonText = "Restart Game"
+    } else if(this.state.formVisibleOnPage) {
       currentlyVisibleState = <WordToGuessForm 
                               onNewWordCreation = {this.handleAddingWordToGame}/>
       buttonText = "Return to Splash Page"
@@ -51,6 +81,8 @@ class GameControl extends React.Component {
     <React.Fragment>
       {currentlyVisibleState}
       <button onClick={this.handleClick}>{buttonText}</button>
+      <br />
+      <button onClick={this.viewGame}>FlipView</button>
 
     </ React.Fragment>
     )
@@ -58,12 +90,14 @@ class GameControl extends React.Component {
 }
 
 GameControl.propTypes = {
-  wordToGuess: PropTypes.string
+  wordToGuess: PropTypes.string,
+  letterToGuess: PropTypes.string
 };
 
 const mapStateToProps = state => {
   return {
-    wordToGuess: state.wordToGuess
+    wordToGuess: state.wordToGuess,
+    letterToGuess: state.letterToGuess
   }
 }
 
