@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import WordToGuess from "./WordToGuess";
 
 export default function GameBoard(props) {
 
@@ -12,9 +13,14 @@ export default function GameBoard(props) {
   }
 
   const { wordToGuess, letterToGuess } = props;
+  // props => {wordToGuess, letterToGuess, ...}
+  // wordToGuess
+  // letterToGuess = letterToGuess.value()
+  // props.wordToGuess
   return (
-    <>
+    <> 
       <h1>Hang Person</h1>
+      <WordToGuess wordToGuess={wordToGuess}/>
       <h3>Word to guess: {wordToGuess}</h3>
       <form onSubmit={handleLetterGuess}>
         <input

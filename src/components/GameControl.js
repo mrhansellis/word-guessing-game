@@ -4,6 +4,7 @@ import WordToGuessForm from './WordToGuessForm';
 import SplashPage from './SplashPage';
 //import LetterGuessForm from './LetterGuessForm';
 import GameBoard from './GameBoard';
+//import WordToGuess from './WordToGuess';
 import PropTypes from "prop-types";
 
 class GameControl extends React.Component {
